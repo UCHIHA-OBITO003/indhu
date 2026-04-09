@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>நமது கதை · Our Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@500;700;800&family=Noto+Sans+Tamil:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── SPLASH ── -->
+  <div id="splash">
+    <canvas id="splashCanvas"></canvas>
+    <div class="splash-inner">
+      <div class="splash-moon">&#9790;</div>
+      <h1 class="splash-title">நமது கதை</h1>
+      <p class="splash-en">Our Story</p>
+      <p class="splash-sub">ஒரு அனிமே காவியம் 🎬✨</p>
+      <button id="startBtn">தொடங்கலாம் &#9654;</button>
+    </div>
+  </div>
+
+  <!-- ── SKY BACKGROUND (behind everything) ── -->
+  <div id="skyBg" aria-hidden="true">
+    <div id="sky"></div>
+  </div>
+
+  <!-- ── SKY EFFECTS (sun / moon / weather — above images) ── -->
+  <div id="skyFx" aria-hidden="true">
+    <div id="sun"><div class="sun-glow"></div></div>
+    <div id="moon"></div>
+    <canvas id="particles"></canvas>
+  </div>
+
+  <main id="story">
+
+    <!-- ── INTRO ── -->
+    <section class="scene intro">
+      <div class="inner">
+        <p class="tag">அழகே! 🌸</p>
+        <h1 class="intro-title">அடியே அழகே! 💫</h1>
+        <p class="hint">வா என் வெள்ள நிலவே... 🌙</p>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!--
+      Each chapter:
+        data-src       = normal photo
+        data-anime     = anime-converted photo (you will provide animedragon_1.jpeg … animedragon_10.jpeg)
+        data-transition= which anime reveal animation to play
+        data-ch-num    = chapter number display
+        data-ch-tamil  = Tamil name of the time of day
+        data-song      = song reference label (displayed, not quoting lyrics)
+        data-text      = original Tamil caption line (poetic, inspired by the song's mood)
+    -->
+
+    <section class="scene chapter"
+      data-src="./images/dragon_1.jpeg"
+      data-anime="./images/animedragon_1.png"
+      data-transition="wipe-down"
+      data-ch-num="I"
+      data-ch-tamil="இரவு"
+      data-song="&#9834; 🌙 Aasa pulla &middot; youth ✨"
+      data-text="நைட்டானா கனவுல வா ரதியே 🌙
+      ப்ரைட்டா நா யோசிக்கிறேன் உன்ன பத்தியே... ✨">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_2.jpeg"
+      data-anime="./images/animedragon_2.jpeg"
+      data-transition="wipe-right"
+      data-ch-num="II"
+      data-ch-tamil="விடிவெள்ளி"
+      data-song="&#9834; 🌅 Maane Maane &middot; Uriyadi 🌸"
+      data-text="ரமானே! மானே! 🌅
+      உறவென நெனச்சேனே! 💞
+      நானே! நானே!
+உசுருக்குள் ஒளிச்சேனே! ✨">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_3.jpeg"
+      data-anime="./images/animedragon_3.jpeg"
+      data-anime-pos="10% center"
+      data-transition="iris"
+      data-ch-num="III"
+      data-ch-tamil="விடியல்"
+      data-song="&#9834; ☀️ Kannamma...! &middot; Ispade Rajavum Idhaya Raniyum 💛"
+      data-text="கண்ணம்மா உன்ன ☀️
+      மனசில் நினைக்கிறேன்
+      பார்வை பாரடி 👀
+      பெண்ணே...! 💛">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_4.jpeg"
+      data-anime="./images/animedragon_4.jpeg"
+      data-transition="diagonal"
+      data-ch-num="IV"
+      data-ch-tamil="காலை மலர்"
+      data-song="&#9834; 🌼 Kannaana Kanne Song &middot; Naanum Rowdy Dhaan 🦋"
+      data-text="நீ கண்ட 🌼
+      கனவு எதுமே கலையகூடாதே
+      நான் இருக்கும் நாள் வரைக்கும் 🤍
+      நீ அழுக கூடாதே 🦋">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_5.jpeg"
+      data-anime="./images/animedragon_5.jpeg"
+      data-transition="burn"
+      data-ch-num="V"
+      data-ch-tamil="நண்பகல்"
+      data-song="&#9834; 🌤️ Munbe Vaa &middot; Sillunu Oru Kaadhal 🎶"
+      data-text="வா என்று அழைக்கும் வானம் — நீ இருந்தால் தூரம் இல்லை 🌤️🎶">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_6.jpeg"
+      data-anime="./images/animedragon_6.jpeg"
+      data-transition="split"
+      data-ch-num="VI"
+      data-ch-tamil="தென்றல்"
+      data-song="&#9834; 🍃 Thenral Vandhu &middot; Ninaithale Inikkum 💫"
+      data-text="தென்றல் வந்து தீண்டும் போது ...! 🍃💫">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_7.jpeg"
+      data-anime="./images/animedragon_7.jpeg"
+      data-transition="wipe-left"
+      data-ch-num="VII"
+      data-ch-tamil="சாயங்காலம்"
+      data-song="&#9834; 🌇 Kadhal Kappal &middot; Iraivi 🚢"
+      data-text="உன்னாலத்தானே 🌇
+      மழை மேகம் பெய்யும் ☁️
+      இல்லாமப் போனா என்ன
+      செய்ய...? 🚢">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_8.jpeg"
+      data-anime="./images/animedragon_8.jpeg"
+      data-transition="glitch"
+      data-ch-num="VIII"
+      data-ch-tamil="மழை"
+      data-song="&#9834; 🌧️ Thimiru Kaattaadha Di &middot; LKG ☔"
+      data-text="கலர் கலரா 🌧️
+      கனவு கானுற
+      காலம் இல்லடி காமாட்சி ☔
+      கடக்கரையில காதல வளக்க
+      மூடு இல்லடி மீனாட்சி ✨">
+    </section>
+
+    <section class="scene chapter"
+      data-src="./images/dragon_9.jpeg"
+      data-anime="./images/animedragon_9.jpeg"
+      data-transition="corner"
+      data-ch-num="IX"
+      data-ch-tamil="நட்சத்திரம்"
+      data-song="&#9834; 🌌 Rasathi Unna Song Lyrics &middot; Vaidehi Kathirunthal ⭐"
+      data-text="ராசாத்தி உன்ன 🌌
+      காணாத நெஞ்சு காத்தாடி
+      போலாடுது ராசாத்தி உன்ன ⭐
+      காணாத நெஞ்சு காத்தாடி
+      போலாடுது ... ✨">
+    </section>
+
+    <section class="scene chapter finale"
+      data-src="./images/dragon_10.jpeg"
+      data-anime="./images/animedragon_10.jpeg"
+      data-transition="wipe-up"
+      data-ch-num="X"
+      data-ch-tamil="இரவு மீண்டும்"
+      data-song="&#9834; 🌠 Azhagiye &middot; Kaatru Veliyidai 🎼"
+      data-text="அழகியே… 🌠
+      மோி மீ மோி மீ அழகியே… 🎼💫">
+    </section>
+
+    <!-- ── OUTRO ── -->
+    <section class="scene outro">
+      <div class="outro-inner">
+        <img src="./images/model.png" alt="" class="model-img">
+        <h2 class="outro-title">என் கண்மணி..! 🌙💜</h2>
+        <p class="outro-text">Isn't the moon Lovely? ✨</p>
+        <p class="outro-en">Every moment with you is a poem. 🫶</p>
+        <div class="heart-pulse">&#10084;</div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="overlay vignette" aria-hidden="true"></div>
+  <div class="overlay grain" aria-hidden="true"></div>
+  <canvas id="roadLife" aria-hidden="true"></canvas>
+  <div id="prog" aria-hidden="true"><div id="progFill"></div></div>
+  <button id="musicBtn" aria-label="Toggle music">&#9835;</button>
+  <canvas id="elephant" aria-hidden="true"></canvas>
+  <div id="ytPlayerHost" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
