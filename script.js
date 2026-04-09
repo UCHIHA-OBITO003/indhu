@@ -58,6 +58,7 @@
   const splash   = $("#splash");
   const startBtn = $("#startBtn");
   const roadLifeCanvas = $("#roadLife");
+  const allScenes = [...document.querySelectorAll(".scene")];
 
   /* ═══════════════════════════════════════════════
      BUILD CHAPTER SCENES
@@ -173,6 +174,58 @@
       isUserScrolling = false;
     }, 140);
     if (!rafPending) { rafPending = true; requestAnimationFrame(updateFrame); }
+  }
+
+  /* ═══════════════════════════════════════════════
+     MOBILE TOUCH PAGING (auto move to next/prev scene)
+  ═══════════════════════════════════════════════ */
+  let touchStartY = 0;
+  let touchStartX = 0;
+  let touchStartTs = 0;
+  let isPaging = false;
+
+  function getClosestSceneIndex() {
+    const y = window.scrollY + window.innerHeight * 0.5;
+    for (let i = 0; i < allScenes.length; i++) {
+      const top = allScenes[i].offsetTop;
+      const bottom = top + allScenes[i].offsetHeight;
+      if (y >= top && y < bottom) return i;
+    }
+    return allScenes.length - 1;
+  }
+
+  function pageToScene(index) {
+    const clamped = clamp(index, 0, allScenes.length - 1);
+    const target = allScenes[clamped];
+    if (!target) return;
+    isPaging = true;
+    window.scrollTo({ top: target.offsetTop, behavior: "smooth" });
+    setTimeout(() => {
+      isPaging = false;
+      onScroll();
+    }, 520);
+  }
+
+  function handleSwipePaging(endY, endX, endTs) {
+    if (!document.body.classList.contains("scrollable") || isPaging) return;
+    const dy = endY - touchStartY;
+    const dx = endX - touchStartX;
+    const dt = Math.max(1, endTs - touchStartTs);
+    const absY = Math.abs(dy);
+    const absX = Math.abs(dx);
+    const velocityY = absY / dt; // px/ms
+
+    // Vertical intentional swipe only.
+    const enoughDistance = absY > 42;
+    const enoughVelocity = velocityY > 0.28;
+    if (absY <= absX || (!enoughDistance && !enoughVelocity)) return;
+
+    const currentIdx = getClosestSceneIndex();
+    if (dy < 0) {
+      pageToScene(currentIdx + 1); // swipe up -> next
+    } else {
+      pageToScene(currentIdx - 1); // swipe down -> prev
+    }
   }
 
   /* ═══════════════════════════════════════════════
@@ -1112,6 +1165,20 @@
     initAudio();
 
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("touchstart", (e) => {
+      if (!e.touches || !e.touches[0]) return;
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+      touchStartTs = performance.now();
+    }, { passive: true });
+    window.addEventListener("touchend", (e) => {
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+      handleSwipePaging(
+        e.changedTouches[0].clientY,
+        e.changedTouches[0].clientX,
+        performance.now()
+      );
+    }, { passive: true });
     window.addEventListener("resize", () => {
       resizeCanvas();
       resizeRoadLife();
